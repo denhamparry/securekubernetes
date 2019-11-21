@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-\.]+">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.5.0">
     
     
       
@@ -40,7 +40,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -51,7 +51,7 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
@@ -470,9 +470,10 @@
 <p>Now, let's become <strong>DarkRed</strong> and leverage this new access:</p>
 <h2 id="deploying-miners">Deploying Miners<a class="headerlink" href="#deploying-miners" title="Permanent link">&para;</a></h2>
 <p>The webshell can be found at <a href="http://your-ip:31336/webshell/" target="_blank">http://your-ip:31336/webshell/</a>, and uses your workshop credentials as before.</p>
-<p>Your Cloud Shell has a little script to help:
-<div class="codehilite"><pre><span></span><span class="go">attack-2-helper.sh</span>
-</pre></div></p>
+<p>Your Cloud Shell has a little script to help:</p>
+<div class="codehilite"><pre><span></span><span class="go">./attack-2-helper.sh</span>
+</pre></div>
+
 <p>Run a few commands to make sure it's working and gather some basic information:</p>
 <div class="codehilite"><pre><span></span><span class="go">id; uname -a; cat /etc/lsb-release /etc/redhat-release; ps -ef; env | grep -i kube</span>
 </pre></div>
@@ -503,7 +504,7 @@
 <div class="codehilite"><pre><span></span><span class="go">docker ps</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="go">docker run -d securekubernetes/bitcoinero &quot;./moneymoneymoney -c1 -l10&quot;</span>
+<div class="codehilite"><pre><span></span><span class="go">docker run -d securekubernetes/bitcoinero -c1 -l10</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="go">docker container ls</span>
@@ -646,7 +647,7 @@ Yes, this looks better! We save that token in our PalmPilot for later use, and p
       
     </div>
     
-      <script src="../assets/javascripts/application.ac79c3b0.js"></script>
+      <script src="../assets/javascripts/application.a8b5e56f.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       

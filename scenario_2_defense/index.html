@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-\.]+">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.5.0">
     
     
       
@@ -40,7 +40,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -51,7 +51,7 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
@@ -504,11 +504,11 @@
 <p>But wait, looks like they're directly on the node.</p>
 <p>They tried to create a pod, but failed. So, they created a Service and an Endpoint.</p>
 <p>In cloud shell, let's see if those exist:</p>
-<div class="codehilite"><pre><span></span><span class="go">kubectl -n kube-system get svc</span>
-<span class="go">kubectl -n kube-system get ep</span>
+<div class="codehilite"><pre><span></span><span class="go">kubectl -n kube-system get svc,ep</span>
 </pre></div>
 
-<p>That's one sneaky hacker, creating services and endpoints under the guise of Istio! Well, jokes on them, I'm not using a service mesh.</p>
+<p>That's one sneaky hacker, creating services and endpoints under the guise of Istio!
+But, jokes on them, I'm not using a service mesh.</p>
 <p>Let's delete that service (the endpoint will be deleted too):</p>
 <div class="codehilite"><pre><span></span><span class="go">kubectl -n kube-system delete svc/istio-mgmt</span>
 </pre></div>
@@ -517,28 +517,29 @@
 <div class="codehilite"><pre><span></span><span class="go">kubectl -n dev get pods</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="go">kubectl -n dev logs dashboard -c dashboard</span>
+<div class="codehilite"><pre><span></span><span class="go">kubectl -n dev logs $(kubectl -n dev get pods -o name | grep dashboard) -c dashboard</span>
 </pre></div>
 
 <p>Nothing.</p>
-<div class="codehilite"><pre><span></span><span class="go">kubectl -n dev logs dashboard -c authproxy</span>
+<div class="codehilite"><pre><span></span><span class="go">kubectl -n dev logs $(kubectl -n dev get pods -o name | grep dashboard) -c authproxy</span>
 </pre></div>
 
-<p>Ah, there is <code>/webshell</code> activity in authproxy logs.</p>
-<p>So, how can we mitigate ourselves from this in the future?</p>
+<p>Ah, so this is how they got in. There is <code>/webshell</code> activity in authproxy logs with the source IP.</p>
+<p>But, how can we mitigate ourselves from this in the future?</p>
 <p>Remember that the attacker elevated their privileges by running a privileged container and I remember a talk at KubeCon San Diego 2019 about Open-Policy-Agent/Gatekeeper that can be deployed as an admission controller.</p>
 <p>That should work because an admission controller is a piece of code that intercepts requests to the Kubernetes API server after the request is authenticated and authorized.</p>
 <p><img alt="opa admission gatekeeper" src="../img/opa.png" /></p>
 <p>So, let's block privileged containers and whitelist only the images we expect to have on our cluster:</p>
 <div class="codehilite"><pre><span></span><span class="go">kubectl apply -f https://raw.githubusercontent.com/securekubernetes/securekubernetes/master/manifests/security2.yaml</span>
+<span class="go">sleep 10</span>
 <span class="go">kubectl apply -f https://raw.githubusercontent.com/securekubernetes/securekubernetes/master/manifests/security2-policies.yaml</span>
 </pre></div>
 
 <p>Let's see if this actually works:</p>
-<div class="codehilite"><pre><span></span><span class="go">kubectl run alpine --image=alpine --restart=Never</span>
+<div class="codehilite"><pre><span></span><span class="go">kubectl -n dev run alpine --image=alpine --restart=Never</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="go">kubectl apply -f - &lt;&lt;EOF</span>
+<div class="codehilite"><pre><span></span><span class="go">cat &lt;&lt;EOF &gt;priv-pod.yaml</span>
 <span class="go">apiVersion: v1</span>
 <span class="go">kind: Pod</span>
 <span class="go">metadata:</span>
@@ -551,6 +552,9 @@
 <span class="go">    securityContext:</span>
 <span class="go">      privileged: true</span>
 <span class="go">EOF</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="go">kubectl -n dev apply -f priv-pod.yaml</span>
 </pre></div>
 
 <p>It works!</p>
@@ -617,7 +621,7 @@
       
     </div>
     
-      <script src="../assets/javascripts/application.ac79c3b0.js"></script>
+      <script src="../assets/javascripts/application.a8b5e56f.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
