@@ -526,7 +526,7 @@
 
 <p>It is an exposed dashboard. That's how they got in. There is <code>GET /webshell</code> in authproxy logs with the source IP.</p>
 <p>I might want to disable automatically mounting the serviceaccount token by setting <code>automountServiceAccountToken: false</code> in the pod spec. But, how can we mitigate this further?</p>
-<p>The attacker ran a privileged container, which they shouldn't have been able to. So, we should block that. I remember a talk at KubeCon this week about Open-Policy-Agent/Gatekeeper that gets deployed as an admission controller.</p>
+<p>The attacker ran a privileged container, which they shouldn't have been able to. So, we should block that. I remember a talk at KubeCon this week about <a href="https://github.com/open-policy-agent/gatekeeper" target="_blank">Open-Policy-Agent/Gatekeeper</a> that gets deployed as an admission controller.</p>
 <p>That should work because an admission controller is a piece of code that intercepts requests to the Kubernetes API server after the request is authenticated and authorized.</p>
 <p><img alt="opa admission gatekeeper" src="../img/opa.png" /></p>
 <p>So, we can set a policy that will deny privileged containers and allow only the images we expect to have on our cluster:</p>
