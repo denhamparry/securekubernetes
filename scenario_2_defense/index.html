@@ -525,7 +525,12 @@
 </pre></div>
 
 <p>It is an exposed dashboard. That's how they got in. There is <code>GET /webshell</code> in authproxy logs with the source IP.</p>
-<p>I might want to disable automatically mounting the serviceaccount token by setting <code>automountServiceAccountToken: false</code> in the pod spec. But, how can we mitigate this further?</p>
+<p>We might want to revoke that serviceaccount token: </p>
+<div class="codehilite"><pre><span></span><span class="go">kubectl -n dev delete $(kubectl -n dev get secret -o name| grep default)</span>
+</pre></div>
+
+<p>And perhaps disable the automatic mounting of serviceaccount tokens by setting <code>automountServiceAccountToken: false</code> in the pod spec, if the dashboard doesn't need it. </p>
+<p>But, how can we mitigate this further?</p>
 <p>The attacker ran a privileged container, which they shouldn't have been able to. So, we should block that. I remember a talk at KubeCon this week about <a href="https://github.com/open-policy-agent/gatekeeper" target="_blank">Open-Policy-Agent/Gatekeeper</a> that gets deployed as an admission controller.</p>
 <p>That should work because an admission controller is a piece of code that intercepts requests to the Kubernetes API server after the request is authenticated and authorized.</p>
 <p><img alt="opa admission gatekeeper" src="../img/opa.png" /></p>
@@ -536,7 +541,7 @@
 <span class="go">sleep 15 # Allow time for the Dynamic Admission Controller to take effect</span>
 </pre></div>
 
-<p>Let's see if this actually works (sometimes it takes a few seconds for policies to take effect):</p>
+<p>Let's see if this actually works:</p>
 <div class="codehilite"><pre><span></span><span class="go">kubectl -n dev run alpine --image=alpine --restart=Never</span>
 </pre></div>
 
