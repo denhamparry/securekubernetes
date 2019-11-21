@@ -533,6 +533,7 @@
 <div class="codehilite"><pre><span></span><span class="go">kubectl apply -f https://raw.githubusercontent.com/securekubernetes/securekubernetes/master/manifests/security2.yaml</span>
 <span class="go">sleep 10</span>
 <span class="go">kubectl apply -f https://raw.githubusercontent.com/securekubernetes/securekubernetes/master/manifests/security2-policies.yaml</span>
+<span class="go">sleep 15 # Allow time for the Dynamic Admission Controller to take effect</span>
 </pre></div>
 
 <p>Let's see if this actually works (sometimes it takes a few seconds for policies to take effect):</p>
