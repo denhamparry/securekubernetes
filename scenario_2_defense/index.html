@@ -528,7 +528,7 @@
 <p>So, how can we mitigate ourselves from this in the future?</p>
 <p>Remember that the attacker elevated their privileges by running a privileged container and I remember a talk at KubeCon San Diego 2019 about Open-Policy-Agent/Gatekeeper that can be deployed as an admission controller.</p>
 <p>That should work because an admission controller is a piece of code that intercepts requests to the Kubernetes API server after the request is authenticated and authorized.</p>
-<p><img alt="opa admission gatekeeper" src="https://www.google.com/url?sa=i&amp;rct=j&amp;q=&amp;esrc=s&amp;source=images&amp;cd=&amp;ved=2ahUKEwiir96B8vnlAhWLFjQIHdGOCQUQjRx6BAgBEAQ&amp;url=https%3A%2F%2Fwww.slideshare.net%2FTorinSandall%2Fenforcing-bespoke-policies-in-kubernetes&amp;psig=AOvVaw1qCTJbyRTLCT7xERsgwbx8&amp;ust=1574377132135039" /></p>
+<p><img alt="opa admission gatekeeper" src="../img/opa.png" /></p>
 <p>So, let's block privileged containers and whitelist only the images we expect to have on our cluster:</p>
 <div class="codehilite"><pre><span></span><span class="go">kubectl apply -f https://raw.githubusercontent.com/securekubernetes/securekubernetes/master/manifests/security2.yaml</span>
 <span class="go">kubectl apply -f https://raw.githubusercontent.com/securekubernetes/securekubernetes/master/manifests/security2-policies.yaml</span>
