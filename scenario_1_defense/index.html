@@ -591,7 +591,7 @@
 
 <h3 id="installing-security-visibility">Installing Security Visibility<a class="headerlink" href="#installing-security-visibility" title="Permanent link">&para;</a></h3>
 <p>It's now very clear to <strong>Blue</strong> that without additional information, it's difficult to determine exactly <em>who</em> or <em>what</em> created that <code>bitcoinero</code> deployment.  Was it code?  Was it a human?  <strong>Blue</strong> suspects it was one of the engineers on the team, but there's not much they can do without proof.  Remembering that this <code>cluster</code> doesn't have any runtime behavior monitoring and detection software installed, <strong>Blue</strong> decides to install <a href="https://falco.org" target="_blank">Sysdig's Falco</a> using an all-in-one manifest from a prominent blogger.</p>
-<div class="codehilite"><pre><span></span><span class="go">kubectl apply -f security.yml</span>
+<div class="codehilite"><pre><span></span><span class="go">kubectl apply -f https://raw.githubusercontent.com/securekubernetes/securekubernetes/master/manifests/security.yml</span>
 </pre></div>
 
 <p>Just to make sure it's working, <strong>Blue</strong> runs the following command to get the logs from the deployed <code>Falco</code> <code>pod(s)</code>:</p>
