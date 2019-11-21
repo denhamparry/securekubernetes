@@ -472,7 +472,7 @@
 </pre></div>
 
 <p>So far, everything looks normal. What gives?</p>
-<p>Remembering that <code>falco</code> was deployed for runtime visibility and monitoring last time, we seem to be getting alerts from StackDriver filters.</p>
+<p>Hold on. We installed <code>falco</code> last time and it is throwing us alerts in StackDriver.</p>
 <p>In a new <a href="https://console.cloud.google.com/logs/viewer" target="_blank">StackDriver window</a>, let's run the query:</p>
 <div class="codehilite"><pre><span></span><span class="go">resource.type=&quot;container&quot;</span>
 <span class="go">resource.labels.container_name:&quot;falco&quot;</span>
@@ -480,62 +480,62 @@
 </pre></div>
 
 <p>We're looking for <code>container</code> logs from <code>falco</code> where triggered rules are privileged containers or interactive shells.</p>
-<p>Huh. This is definitely odd. What is this privileged <code>alpine</code> container?</p>
-<p>In a new <a href="https://console.cloud.google.com/logs/viewer" target="_blank">StackDriver window</a>, let's correlate this with kubernetes cluster logs:</p>
+<p>Huh. This is odd. A privileged <code>alpine</code> container, but no other information to go off of? What can kubernetes cluster logs tell us about this <code>alpine</code> container?</p>
+<p>In a new <a href="https://console.cloud.google.com/logs/viewer" target="_blank">StackDriver window</a>, let's run this query:</p>
 <div class="codehilite"><pre><span></span><span class="go">resource.type=k8s_cluster</span>
 <span class="go">protoPayload.request.spec.containers.image=&quot;alpine&quot;</span>
 </pre></div>
 
 <p>So, we see a few things:</p>
 <ol>
-<li>References to <code>dev</code> namespace and serviceaccount <code>system:serviceaccount:dev:default</code></li>
+<li>A create event that was authorized with the <code>system:serviceaccount:dev:default</code> serviceaccount in the <code>dev</code> namespace.</li>
 <li>A pod named <code>r00t</code> got created</li>
 <li>The pod command is <code>nsenter --mount=/proc/1/ns/mnt -- /bin/bash</code></li>
 <li>The <code>securityContext</code> is <code>privileged: true</code></li>
 <li>The <code>hostPID</code> is set to <code>true</code></li>
 </ol>
-<p>This is not looking good. Can we see any activity in this container?</p>
+<p>This is not looking good. Can we see what this container did?</p>
 <p>In a new <a href="https://console.cloud.google.com/logs/viewer" target="_blank">StackDriver window</a>, let's search for this <code>r00t</code> container logs:</p>
 <div class="codehilite"><pre><span></span><span class="go">resource.type=&quot;container&quot;</span>
 <span class="go">resource.labels.pod_id:r00t</span>
 </pre></div>
 
-<p>Wow. We are seeing some commands executed from the container.</p>
-<p>But wait, looks like they're directly on the node.</p>
-<p>They tried to create a pod, but failed. So, they created a Service and an Endpoint.</p>
-<p>In cloud shell, let's see if those exist:</p>
+<p>Wow. We can see someone was running commands from this container.</p>
+<p>But wait, they can run docker commands? How can they talk to the docker on the host from the container? OH NO! They must have broken out of the container and by this point they're on the host!</p>
+<p>That <code>bitcoinero</code> container again must be what's causing slowness. But, they're trying to do something else.</p>
+<p>They tried to create a pod, but failed. So, they created a Service and an Endpoint. They must be trying to open a backdoor of some sort to get back in later.</p>
+<p>In cloud shell, let's check if those exist:</p>
 <div class="codehilite"><pre><span></span><span class="go">kubectl -n kube-system get svc,ep</span>
 </pre></div>
 
-<p>That's one sneaky hacker, creating services and endpoints under the guise of Istio!
-But, jokes on them, I'm not using a service mesh.</p>
+<p>That's one sneaky hacker, for sure. But, jokes on them, We're not using service mesh.</p>
 <p>Let's delete that service (the endpoint will be deleted too):</p>
 <div class="codehilite"><pre><span></span><span class="go">kubectl -n kube-system delete svc/istio-mgmt</span>
 </pre></div>
 
-<p>But, how did this happen?!?!?! What is in <code>dev</code> namespace that led to someone running commands on the nodes?</p>
+<p>But, I want to know how did they get in in the first place?!?!?! The <code>create</code> event authorized because of the <code>dev:default</code> serviceaccount. So, what is in <code>dev</code> namespace that led to someone taking over the entire host?</p>
 <div class="codehilite"><pre><span></span><span class="go">kubectl -n dev get pods</span>
 </pre></div>
 
+<p>There is an <code>app</code>, a <code>db</code>, and a <code>dashboard</code>. Wait a second! Could it be an exposed dashboard?</p>
 <div class="codehilite"><pre><span></span><span class="go">kubectl -n dev logs $(kubectl -n dev get pods -o name | grep dashboard) -c dashboard</span>
 </pre></div>
 
-<p>Nothing.</p>
 <div class="codehilite"><pre><span></span><span class="go">kubectl -n dev logs $(kubectl -n dev get pods -o name | grep dashboard) -c authproxy</span>
 </pre></div>
 
-<p>Ah, so this is how they got in. There is <code>/webshell</code> activity in authproxy logs with the source IP.</p>
-<p>But, how can we mitigate ourselves from this in the future?</p>
-<p>Remember that the attacker elevated their privileges by running a privileged container and I remember a talk at KubeCon San Diego 2019 about Open-Policy-Agent/Gatekeeper that can be deployed as an admission controller.</p>
+<p>It is an exposed dashboard. That's how they got in. There is <code>GET /webshell</code> in authproxy logs with the source IP.</p>
+<p>I might want to disable automatically mounting the serviceaccount token by setting <code>automountServiceAccountToken: false</code> in the pod spec. But, how can we mitigate this further?</p>
+<p>The attacker ran a privileged container, which they shouldn't have been able to. So, we should block that. I remember a talk at KubeCon this week about Open-Policy-Agent/Gatekeeper that gets deployed as an admission controller.</p>
 <p>That should work because an admission controller is a piece of code that intercepts requests to the Kubernetes API server after the request is authenticated and authorized.</p>
 <p><img alt="opa admission gatekeeper" src="../img/opa.png" /></p>
-<p>So, let's block privileged containers and whitelist only the images we expect to have on our cluster:</p>
+<p>So, we can set a policy that will deny privileged containers and allow only the images we expect to have on our cluster:</p>
 <div class="codehilite"><pre><span></span><span class="go">kubectl apply -f https://raw.githubusercontent.com/securekubernetes/securekubernetes/master/manifests/security2.yaml</span>
 <span class="go">sleep 10</span>
 <span class="go">kubectl apply -f https://raw.githubusercontent.com/securekubernetes/securekubernetes/master/manifests/security2-policies.yaml</span>
 </pre></div>
 
-<p>Let's see if this actually works:</p>
+<p>Let's see if this actually works (sometimes it takes a few seconds for policies to take effect):</p>
 <div class="codehilite"><pre><span></span><span class="go">kubectl -n dev run alpine --image=alpine --restart=Never</span>
 </pre></div>
 
@@ -558,7 +558,7 @@ But, jokes on them, I'm not using a service mesh.</p>
 </pre></div>
 
 <p>It works!</p>
-<p>I should call the boss about this incident.</p>
+<p>I should tell the boss about this.</p>
                 
                   
                 
