@@ -582,37 +582,36 @@
 <p>The attacker ran a privileged container, which they shouldn't have been able to. So, we should block that. I remember a talk at KubeCon this week about <a href="https://github.com/open-policy-agent/gatekeeper" target="_blank">Open-Policy-Agent/Gatekeeper</a> that gets deployed as an admission controller.</p>
 <p>That should work because an admission controller is a piece of code that intercepts requests to the Kubernetes API server after the request is authenticated and authorized.</p>
 <p><img alt="opa admission gatekeeper" src="../img/opa.png" /></p>
-<p>So, we can set a policy that will deny privileged containers and allow only the images we expect to have on our cluster:</p>
+<p>So, we should set two policies:</p>
+<ol>
+<li>Deny privileged containers.</li>
+<li>Allow only the images we expect to have in <code>dev</code> and <code>prd</code> namespaces.</li>
+</ol>
+<p>First, let's apply Gatekeeper itself:</p>
 <div class="codehilite"><pre><span></span><span class="go">kubectl apply -f https://raw.githubusercontent.com/securekubernetes/securekubernetes/master/manifests/security2.yaml</span>
-<span class="go">sleep 10</span>
-<span class="go">kubectl apply -f https://raw.githubusercontent.com/securekubernetes/securekubernetes/master/manifests/security2-policies.yaml</span>
-<span class="go">sleep 15 # Allow time for the Dynamic Admission Controller to take effect</span>
 </pre></div>
 
-<p>Let's see if this actually works:</p>
+<p>Second, let's apply the policies. If you receive an error about <code>no matches for kind... in version ...</code>, this means Gatekeeper has not kicked into gear yet. Wait a few seconds then re-apply policies:</p>
+<div class="codehilite"><pre><span></span><span class="go">kubectl apply -f https://raw.githubusercontent.com/securekubernetes/securekubernetes/master/manifests/security2-policies.yaml</span>
+</pre></div>
+
+<p>Let's see if this actually works by trying to run some containers that violate these policies.</p>
+<p>First, let's try to run privileged container:</p>
+<div class="codehilite"><pre><span></span><span class="go">kubectl -n dev run ubuntu --image=ubuntu --privileged --restart=Never</span>
+</pre></div>
+
+<p>We see that Kubernetes denied this request for 2 reasons (not whitelisted image and privileged), as expected.</p>
+<p>Let's try running a non-whitelisted image:</p>
 <div class="codehilite"><pre><span></span><span class="go">kubectl -n dev run alpine --image=alpine --restart=Never</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="go">cat &lt;&lt;EOF &gt;priv-pod.yaml</span>
-<span class="go">apiVersion: v1</span>
-<span class="go">kind: Pod</span>
-<span class="go">metadata:</span>
-<span class="go">  name: privileged-pod</span>
-<span class="go">spec:</span>
-<span class="go">  containers:</span>
-<span class="go">  - name: ubuntu</span>
-<span class="go">    image: ubuntu</span>
-<span class="go">    stdin: true</span>
-<span class="go">    securityContext:</span>
-<span class="go">      privileged: true</span>
-<span class="go">EOF</span>
+<p>We see that Kubernetes rejected this request again due to image not being whitelisted/allowed, as expected.</p>
+<p>Can we still run pods that meet/satisfy the Gatekeeper policies? Let's find out:</p>
+<div class="codehilite"><pre><span></span><span class="go">kubectl -n dev run ubuntu --image=ubuntu --restart=Never</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="go">kubectl -n dev apply -f priv-pod.yaml</span>
-</pre></div>
-
-<p>It works!</p>
-<p>I should tell the boss about this.</p>
+<p>Yes, looks like we can run pods that satisfy the policies and requirements we set on our cluster.</p>
+<p>Even though we applied Falco and Gatekeeper, we should not continue to use this cluster since it has been compromised. We should create a new cluster and re-deploy our applications there once we've hardened and secured it enough.</p>
                 
                   
                 
@@ -679,7 +678,7 @@
   <div class="md-footer-social">
     <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
     
-      <a href="https://github.com/tabbysable/kubeconctf19" class="md-footer-social__link fa fa-github-alt"></a>
+      <a href="https://github.com/securekubernetes/securekubernetes" class="md-footer-social__link fa fa-github-alt"></a>
     
   </div>
 
