@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-\.]+">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.5.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.5.1">
     
     
       
@@ -597,7 +597,22 @@
 
 <p>Let's see if this actually works by trying to run some containers that violate these policies.</p>
 <p>First, let's try to run privileged container:</p>
-<div class="codehilite"><pre><span></span><span class="go">kubectl -n dev run ubuntu --image=ubuntu --privileged --restart=Never</span>
+<div class="codehilite"><pre><span></span><span class="go">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="go">apiVersion: v1</span>
+<span class="go">kind: Pod</span>
+<span class="go">metadata:</span>
+<span class="go">  name: nginx</span>
+<span class="go">  labels:</span>
+<span class="go">    app: nginx</span>
+<span class="go">spec:</span>
+<span class="go">  containers:</span>
+<span class="go">  - name: nginx</span>
+<span class="go">    image: nginx</span>
+<span class="go">    ports:</span>
+<span class="go">    - containerPort: 80</span>
+<span class="go">    securityContext:</span>
+<span class="go">      privileged: true</span>
+<span class="go">EOF</span>
 </pre></div>
 
 <p>We see that Kubernetes denied this request for 2 reasons (not whitelisted image and privileged), as expected.</p>
@@ -688,7 +703,7 @@
       
     </div>
     
-      <script src="../assets/javascripts/application.a8b5e56f.js"></script>
+      <script src="../assets/javascripts/application.8e03edeb.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
