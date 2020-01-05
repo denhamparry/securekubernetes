@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-\.]+">
       
       <link rel="shortcut icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.5.1">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
     
     
       
@@ -56,7 +56,7 @@
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
@@ -111,7 +111,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Getting Connected
+                Introduction
               
             </span>
           
@@ -231,11 +231,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Getting Connected
+        Introduction
       </label>
     
-    <a href="." title="Getting Connected" class="md-nav__link md-nav__link--active">
-      Getting Connected
+    <a href="." title="Introduction" class="md-nav__link md-nav__link--active">
+      Introduction
     </a>
     
       
@@ -249,15 +249,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    Introduction
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#getting-connected" class="md-nav__link">
-    Getting Connected
+  <a href="#getting-started" class="md-nav__link">
+    Getting Started
   </a>
   
 </li>
@@ -277,6 +270,18 @@
   
 </nav>
     
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="gke/" title="Getting Started" class="md-nav__link">
+      Getting Started
+    </a>
   </li>
 
     
@@ -397,15 +402,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    Introduction
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#getting-connected" class="md-nav__link">
-    Getting Connected
+  <a href="#getting-started" class="md-nav__link">
+    Getting Started
   </a>
   
 </li>
@@ -437,56 +435,25 @@
                 
                 
                 <h1 id="kubecon-na-2019-ctf">KubeCon NA 2019 CTF<a class="headerlink" href="#kubecon-na-2019-ctf" title="Permanent link">&para;</a></h1>
-<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>Welcome to the <a href="https://events19.linuxfoundation.org/events/kubecon-cloudnativecon-north-america-2019/">KubeCon NA 2019</a> Tutorial: <a href="https://sched.co/Uaew">Attacking and Defending Kubernetes Clusters: A Guided Tour</a> Walkthrough Guide.  Each participant will be given access to their own account with direct access to their own Kubernetes cluster environment.  Follow along as we take on the role of two attacking personas looking to make some money and one defending persona working hard to keep the cluster safe and healthy.</p>
-<h2 id="getting-connected">Getting Connected<a class="headerlink" href="#getting-connected" title="Permanent link">&para;</a></h2>
-<ol>
-<li>
-<p>Get a "credential card" from one of the room assistants.  Do not share these credentials with others unless you are planning on working together.</p>
-<div class="admonition warning">
-<p class="admonition-title">A Note on Sharing Credentials</p>
-<p>For the best possible experience, every participant should interact with their own dedicated environment to avoid accidental contention when running commands that modify the environment.  We encourage working together with your neighbor--each working in their own cluster.</p>
-</div>
-</li>
-<li>
-<p>If you're not already in an Incognito/Private window, <a href="https://securekubernetes.com">right-click this link and choose "Open Link in Incognito Window"</a> (or similar option).</p>
-</li>
-<li>
-<p>Right-click the button below, choose "Open in New Tab", and sign in with your credentials.<br>
-<a href="https://console.cloud.google.com/kubernetes/list?cloudshell=true&amp;cloudshell_git_repo=https://github.com/securekubernetes/cloud-shell-setup&amp;shellonly=true"><img alt="Open in Cloud Shell" src="https://gstatic.com/cloudssh/images/open-btn.svg" /></a></p>
-</li>
-<li>
-<p>Accept the Terms:</p>
-<p><img alt="terms" src="img/terms.png" /></p>
-</li>
-<li>
-<p>Accept the next set of Terms:</p>
-<p><img alt="terms" src="img/tos.png" /></p>
-</li>
-<li>
-<p>Check "I Agree..." and then <strong>Start Cloud Shell</strong>: </p>
-<p><img alt="terms" src="img/cloudshell-terms.png" /></p>
-</li>
-<li>
-<p>At the top of the Browser window, click <strong>Dismiss</strong> on the free GCP Trial banner if you see it.</p>
-</li>
-<li>
-<p>Once inside the Cloud Shell terminal, run:
-    <div class="codehilite"><pre><span></span><span class="go">./setup.sh</span>
-</pre></div></p>
+<p>Welcome to the Attacking and Defending Kubernetes Clusters: A Guided Tour Walkthrough Guide, as <a href="https://www.youtube.com/watch?v=UdMFTdeAL1s">presented at KubeCon NA 2019</a>. We'll help you create your own Kubernetes environment so you can follow along as we take on the role of two attacking personas looking to make some money and one defending persona working hard to keep the cluster safe and healthy.</p>
 <div class="admonition note">
 <p class="admonition-title">Use the Copy to Clipboard Feature</p>
-<p>Each terminal command block in this guide has a double-square icon on the far right side which automatically copies the content to your paste buffer to make things easier to follow along.</p>
 </div>
-</li>
-<li>
-<p>Next, run:
-    <div class="codehilite"><pre><span></span><span class="go">kubectl get pods --all-namespaces</span>
-</pre></div></p>
-</li>
-<li>If you see a pod listing, you are all set. <strong>Wait at this point until we work together as a group</strong>.</li>
-<li>If your neighbor needs assistance, please ask if they would like assistance and do so if they accept.  If you are having even greater difficulty, please raise your hand for room assistant help.</li>
-</ol>
+<p>Each terminal command block in this guide has a double-square icon on the far right side which automatically copies the content to your paste buffer to make things easier to follow along.</p>
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<p>Click on "Getting Started" in the table of contents and follow the directions.</p>
+<p>When a kubectl get pods --all-namespaces gives output like the following, you're ready to begin the tutorial.</p>
+<div class="codehilite"><pre><span></span>$ kubectl get pods --all-namespaces
+NAMESPACE     NAME                                         READY   STATUS    RESTARTS   AGE
+dev           app-6ffb94966d-9nqnk                         1/1     Running   0          70s
+dev           dashboard-5889b89d4-dj7kq                    2/2     Running   0          70s
+dev           db-649646fdfc-kzp6g                          1/1     Running   0          70s
+...
+prd           app-6ffb94966d-nfhn7                         1/1     Running   0          70s
+prd           dashboard-7b5fbbc459-sm2zk                   2/2     Running   0          70s
+prd           db-649646fdfc-vdwj6                          1/1     Running   0          70s
+</pre></div>
+
 <h2 id="about-the-creators">About the Creators<a class="headerlink" href="#about-the-creators" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://twitter.com/tabbysable">@tabbysable</a> has been a hacker and cross-platform sysadmin since the turn of the century. She can often be found teaching network offense and defense to sysadmins, system administration to security folks, bicycling, and asking questions that start with "I wonder what happens if we..."</li>
@@ -496,6 +463,7 @@
 </ul>
                 
                   
+                
                 
               
               
@@ -515,13 +483,13 @@
       <nav class="md-footer-nav__inner md-grid">
         
         
-          <a href="scenario_1_attack/" title="Scenario 1 Attack" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="gke/" title="Getting Started" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Scenario 1 Attack
+                Getting Started
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
@@ -556,7 +524,7 @@
       
     </div>
     
-      <script src="assets/javascripts/application.8e03edeb.js"></script>
+      <script src="assets/javascripts/application.808e90bb.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"."}})</script>
       

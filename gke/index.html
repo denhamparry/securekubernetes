@@ -36,7 +36,7 @@
     
     
       
-        <title>Bonus Challenge Hints - KubeCon NA 2019 Tutorial Guide</title>
+        <title>Getting Started - KubeCon NA 2019 Tutorial Guide</title>
       
     
     
@@ -85,7 +85,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#bonus-hints" tabindex="1" class="md-skip">
+      <a href="#getting-started" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -111,7 +111,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Bonus Challenge Hints
+                Getting Started
               
             </span>
           
@@ -232,11 +232,20 @@
       
       
 
+  
 
-  <li class="md-nav__item">
-    <a href="../gke/" title="Getting Started" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="Getting Started" class="md-nav__link md-nav__link--active">
       Getting Started
     </a>
+    
   </li>
 
     
@@ -304,56 +313,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Bonus Challenge Hints
-      </label>
-    
-    <a href="./" title="Bonus Challenge Hints" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../bonus_hints/" title="Bonus Challenge Hints" class="md-nav__link">
       Bonus Challenge Hints
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#bonus-1-challenge-hint" class="md-nav__link">
-    Bonus 1 Challenge Hint:
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bonus-2-challenge-hint" class="md-nav__link">
-    Bonus 2 Challenge Hint:
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
     
@@ -398,29 +362,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#bonus-1-challenge-hint" class="md-nav__link">
-    Bonus 1 Challenge Hint:
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bonus-2-challenge-hint" class="md-nav__link">
-    Bonus 2 Challenge Hint:
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -431,14 +372,57 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/securekubernetes/securekubernetes/edit/master/docs/bonus_hints.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/securekubernetes/securekubernetes/edit/master/docs/gke.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="bonus-hints">Bonus Hints<a class="headerlink" href="#bonus-hints" title="Permanent link">&para;</a></h1>
-<h2 id="bonus-1-challenge-hint">Bonus 1 Challenge Hint:<a class="headerlink" href="#bonus-1-challenge-hint" title="Permanent link">&para;</a></h2>
-<p>On the host, look at <code>/home/kubernetes/.bash_history</code> bash shell history.</p>
-<h2 id="bonus-2-challenge-hint">Bonus 2 Challenge Hint:<a class="headerlink" href="#bonus-2-challenge-hint" title="Permanent link">&para;</a></h2>
-<p>Review the leftover Helm chart deploy history <code>configmap</code> in the <code>kube-system</code> <code>namespace</code>. Base64 decode and <code>gunzip</code> the contents of the <code>configmap</code> data, and examine the contents of the container image referenced in the <code>deployment</code> manifest.</p>
+                <h1 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h1>
+<ol>
+<li>
+<p>Create a new Google account or choose an existing one, as you prefer.</p>
+</li>
+<li>
+<p>Right-click the button below, choose "Open in New Tab", and sign in.<br>
+<a href="https://console.cloud.google.com/kubernetes/list?cloudshell=true&amp;cloudshell_git_repo=https://github.com/securekubernetes/cloud-shell-setup&amp;shellonly=true"><img alt="Open in Cloud Shell" src="https://gstatic.com/cloudssh/images/open-btn.svg" /></a></p>
+</li>
+<li>
+<p>Accept all Terms and Conditions as necessary.</p>
+</li>
+<li>
+<p>Click "Confirm" if prompted to clone the git repo into your Cloud Shell. It may look like this:<br>
+<img alt="Confirm Clone" src="../img/confirm-clone.png" /></p>
+</li>
+<li>
+<p>Click "Cancel" if prompted to open the code editor. It may look like this:<br>
+<img alt="Confirm Clone" src="../img/confirm-edit.png" /></p>
+</li>
+<li>
+<p>If the Google account has not had Billing set up yet, click "Activate" on the free trial banner and step through the workflow to sign up for the free trial.</p>
+</li>
+<li>
+<p>Once inside the Cloud Shell terminal, run setup.sh. This should create a new Project with a single-node Kubernetes cluster that contains the prerequisites for the workshop:
+    <div class="codehilite"><pre><span></span><span class="go">./setup.sh</span>
+</pre></div>
+The script will prompt you for a project name (just hit enter to accept the default) and a password for your webshell instances.</p>
+</li>
+<li>
+<p>When the script is finished, verify it worked correctly.</p>
+</li>
+</ol>
+<div class="codehilite"><pre><span></span><span class="go">kubectl get pods --all-namespaces</span>
+</pre></div>
+
+<p>The output should look similar to this:
+<div class="codehilite"><pre><span></span>$ kubectl get pods --all-namespaces
+NAMESPACE     NAME                                         READY   STATUS    RESTARTS   AGE
+dev           app-6ffb94966d-9nqnk                         1/1     Running   0          70s
+dev           dashboard-5889b89d4-dj7kq                    2/2     Running   0          70s
+dev           db-649646fdfc-kzp6g                          1/1     Running   0          70s
+...
+prd           app-6ffb94966d-nfhn7                         1/1     Running   0          70s
+prd           dashboard-7b5fbbc459-sm2zk                   2/2     Running   0          70s
+prd           db-649646fdfc-vdwj6                          1/1     Running   0          70s
+</pre></div></p>
+<p>If it looks good, move on to Scenaro 1 Attack.</p>
                 
                   
                 
@@ -460,7 +444,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../bonus_challenges/" title="Bonus Challenges" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href=".." title="Introduction" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -469,19 +453,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Bonus Challenges
+                Introduction
               </span>
             </div>
           </a>
         
         
-          <a href="../bonus_1_walkthrough/" title="Bonus 1 Walkthrough" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../scenario_1_attack/" title="Scenario 1 Attack" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Bonus 1 Walkthrough
+                Scenario 1 Attack
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
