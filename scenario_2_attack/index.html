@@ -540,7 +540,7 @@
 
 <p>Review the information. Check for Kubernetes access, and find the limits of our permissions:</p>
 <div class="codehilite"><pre><span></span><span class="go">export PATH=/tmp:$PATH</span>
-<span class="go">cd /tmp; curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl; chmod 555 kubectl</span>
+<span class="go">cd /tmp; curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.4/bin/linux/amd64/kubectl; chmod 555 kubectl</span>
 <span class="go">kubectl get pods</span>
 <span class="go">kubectl get pods --all-namespaces</span>
 <span class="go">kubectl get nodes</span>

@@ -534,7 +534,7 @@
 <p>So far, everything looks normal. What gives?</p>
 <p>Hold on. We installed <code>falco</code> last time and it is throwing us alerts in StackDriver.</p>
 <p>In a new <a href="https://console.cloud.google.com/logs/viewer" target="_blank">StackDriver window</a>, let's run the query:</p>
-<div class="codehilite"><pre><span></span><span class="go">resource.type=&quot;container&quot;</span>
+<div class="codehilite"><pre><span></span><span class="go">resource.type=&quot;k8s_container&quot;</span>
 <span class="go">resource.labels.container_name:&quot;falco&quot;</span>
 <span class="go">jsonPayload.rule=&quot;Launch Privileged Container&quot; OR jsonPayload.rule=&quot;Terminal shell in container&quot;</span>
 </pre></div>
@@ -556,8 +556,8 @@
 </ol>
 <p>This is not looking good. Can we see what this container did?</p>
 <p>In a new <a href="https://console.cloud.google.com/logs/viewer" target="_blank">StackDriver window</a>, let's search for this <code>r00t</code> container logs:</p>
-<div class="codehilite"><pre><span></span><span class="go">resource.type=&quot;container&quot;</span>
-<span class="go">resource.labels.pod_id:r00t</span>
+<div class="codehilite"><pre><span></span><span class="go">resource.type=&quot;k8s_container&quot;</span>
+<span class="go">resource.labels.pod_name:r00t</span>
 </pre></div>
 
 <p>Wow. We can see someone was running commands from this container.</p>

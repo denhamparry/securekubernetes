@@ -660,8 +660,8 @@
 
 <h3 id="ensuring-security-log-flow">Ensuring Security Log Flow<a class="headerlink" href="#ensuring-security-log-flow" title="Permanent link">&para;</a></h3>
 <p>Going back to the <a href="https://console.cloud.google.com/logs/viewer" target="_blank">logging system</a>, <strong>Blue</strong> enters another log filter using the "advanced filter" with the following query to confirm it's receiving all the logs coming from the <code>Falco</code> <code>deployment</code>:</p>
-<div class="codehilite"><pre><span></span><span class="go">resource.type=&quot;container&quot;</span>
-<span class="go">resource.labels.namespace_id=&quot;falco&quot;</span>
+<div class="codehilite"><pre><span></span><span class="go">resource.type=k8s_container</span>
+<span class="go">resource.labels.namespace_name=&quot;falco&quot;</span>
 <span class="go">resource.labels.container_name=&quot;falco&quot;</span>
 </pre></div>
 

