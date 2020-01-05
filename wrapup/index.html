@@ -36,7 +36,7 @@
     
     
       
-        <title>Bonus Challenges - KubeCon NA 2019 Tutorial Guide</title>
+        <title>Wrap Up - KubeCon NA 2019 Tutorial Guide</title>
       
     
     
@@ -85,7 +85,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#bonus-challenges" tabindex="1" class="md-skip">
+      <a href="#wrap-up" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -111,7 +111,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Bonus Challenges
+                Wrap Up
               
             </span>
           
@@ -292,56 +292,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Bonus Challenges
-      </label>
-    
-    <a href="./" title="Bonus Challenges" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../bonus_challenges/" title="Bonus Challenges" class="md-nav__link">
       Bonus Challenges
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#challenge-1" class="md-nav__link">
-    Challenge 1
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#challenge-2" class="md-nav__link">
-    Challenge 2
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
     
@@ -385,11 +340,20 @@
       
       
 
+  
 
-  <li class="md-nav__item">
-    <a href="../wrapup/" title="Wrap Up" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="Wrap Up" class="md-nav__link md-nav__link--active">
       Wrap Up
     </a>
+    
   </li>
 
     
@@ -410,29 +374,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#challenge-1" class="md-nav__link">
-    Challenge 1
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#challenge-2" class="md-nav__link">
-    Challenge 2
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -443,19 +384,14 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/securekubernetes/securekubernetes/edit/master/docs/bonus_challenges.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/securekubernetes/securekubernetes/edit/master/docs/wrapup.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="bonus-challenges">Bonus Challenges<a class="headerlink" href="#bonus-challenges" title="Permanent link">&para;</a></h1>
-<p><strong>Blue's</strong> boss has hired you to see if the cluster is completely "clean".  Use the next block of time to solve the following bonus challenges.  Once you know both answers, approach one of the co-presenters and <em>whisper</em> the answers to both questions to earn the prestigious "expert" badge.</p>
-<h2 id="challenge-1">Challenge 1<a class="headerlink" href="#challenge-1" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Get a root shell on the <code>cluster</code> <code>node</code> again. Find out the image name that was last run directly with docker commands by the <code>kubernetes</code> user.</li>
-</ul>
-<h2 id="challenge-2">Challenge 2<a class="headerlink" href="#challenge-2" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Was this cluster compromised via another mechanism and <strong>Blue</strong> didn't know about it?  (Yes!) Find the IP address of the attacker's system where the reverse shell was being sent.  Hint: Tiller was removed with <code>helm reset --force</code> and so it left some things behind in the <code>kube-system</code> <code>namespace</code>.</li>
-</ul>
+                <h1 id="wrap-up">Wrap-up<a class="headerlink" href="#wrap-up" title="Permanent link">&para;</a></h1>
+<p>Congrats! Remember to delete your project so it won't keep running and accruing charges!</p>
+<p>You can delete it through the web interface, or with the following gcloud command:</p>
+<div class="codehilite"><pre><span></span><span class="go">gcloud projects delete &quot;${DEVSHELL_PROJECT_ID}&quot;</span>
+</pre></div>
                 
                   
                 
@@ -477,7 +413,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../scenario_2_defense/" title="Scenario 2 Defense" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../bonus_2_walkthrough/" title="Bonus 2 Walkthrough" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -486,25 +422,11 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Scenario 2 Defense
+                Bonus 2 Walkthrough
               </span>
             </div>
           </a>
         
-        
-          <a href="../bonus_hints/" title="Bonus Challenge Hints" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                Bonus Challenge Hints
-              </span>
-            </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
-          </a>
         
       </nav>
     </div>
