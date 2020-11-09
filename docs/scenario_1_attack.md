@@ -200,7 +200,7 @@ spec:
             memory: 128Mi
           limits:
             cpu: 200m
-            memory: 128Mi 
+            memory: 128Mi
 EOF
 
 ./kubectl apply -f bitcoinero.yml
